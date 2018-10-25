@@ -10,6 +10,7 @@ EStyleSheet.build({
   $white: "#FFFFFF",
   $lightText: "#797979",
   $darkText: "#343434",
+  $underlay: "#e9e8ef",
 });
 
 export default class App extends React.Component {

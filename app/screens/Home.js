@@ -1,13 +1,21 @@
 import React, { Component } from "react";
-import { View, StatusBar, Text, Dimensions, ActivityIndicator, Image } from "react-native";
+import {
+  View,
+  StatusBar,
+  Text,
+  Dimensions,
+  ActivityIndicator,
+  Image,
+} from "react-native";
 
 import { Container } from "../components/Container";
 import { AlertConsumer } from "../components/Alert";
+import { CardList } from "../components/Card";
 
 import SubredditService from "../shared/services/api/subreddit";
 import constants from "../shared/constants";
 
-const DEFAULT_SUBREDDIT = "picjjjs";
+const DEFAULT_SUBREDDIT = "pics";
 
 class Home extends Component {
   state = {
@@ -21,10 +29,15 @@ class Home extends Component {
 
     return response.data.children.map(({ data }) => {
       const preview = data.preview;
-      let imageResolutionUrl = "";
+      let previewImageUrl = "";
       if (preview != null && preview.images != null) {
         const resolutions = preview.images[0].resolutions;
-        imageResolutionUrl = resolutions.filter(resolution => resolution.width > width)[0].url;
+        filteredImageResolution = resolutions.filter(
+          resolution => resolution.width > width
+        );
+        previewImageUrl = filteredImageResolution.filter(Boolean).length
+          ? filteredImageResolution[0].url
+          : "";
       }
 
       return {
@@ -37,7 +50,7 @@ class Home extends Component {
         id: data.id,
         permalink: data.permalink,
         thumbnail: data.thumbnail,
-        previewImage: imageResolutionUrl,
+        previewImageUrl,
       };
     });
   };
@@ -51,7 +64,11 @@ class Home extends Component {
   fetchSuccess = response => {
     if (!response.data.children.length) {
       this.stopLoading();
-      return this.props.alertWithType("error", "Error", "Sorry, no such subreddit exists.");
+      return this.props.alertWithType(
+        "error",
+        "Error",
+        "Sorry, no such subreddit exists."
+      );
     }
 
     this.setState({
@@ -69,6 +86,9 @@ class Home extends Component {
     SubredditService.get({ subreddit, sorting, params })
       .then(response => this.fetchSuccess(response))
       .catch(error => this.fetchFailure(error));
+  };
+
+  onPress = postURL => {
   };
 
   componentDidMount() {
@@ -109,9 +129,12 @@ class Home extends Component {
     return (
       <Container>
         <StatusBar translucent={false} barStyle="dark-content" />
+        <CardList posts={posts} onPress={this.onPress} />
       </Container>
     );
   }
 }
 
-export default () => <AlertConsumer>{context => <Home {...context} />}</AlertConsumer>;
+export default props => (
+  <AlertConsumer>{context => <Home {...context} {...props} />}</AlertConsumer>
+);
