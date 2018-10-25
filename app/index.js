@@ -1,10 +1,10 @@
 import React from "react";
 import { View } from "react-native";
 
-import Home from "./screens/Home";
+import Navigator from "./config/routes";
 
 export default class App extends React.Component {
   render() {
-    return <Home />;
+    return <Navigator />;
   }
 }
