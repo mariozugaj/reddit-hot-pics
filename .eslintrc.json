@@ -25,7 +25,7 @@
     "max-len": [
       "error",
       {
-        "code": 100,
+        "code": 80,
         "ignoreRegExpLiterals": true,
         "ignoreUrls": true
       }
@@ -34,7 +34,7 @@
       "error",
       {
         "trailingComma": "es5",
-        "printWidth": 100
+        "printWidth": 80
       }
     ]
   }
