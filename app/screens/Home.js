@@ -89,6 +89,11 @@ class Home extends Component {
   };
 
   onPress = postURL => {
+    this.props.navigation.navigate("PostDetails", {
+      postURL: `${constants.baseURL}${postURL}`,
+      title: `r/${this.state.currentSubreddit}`,
+    });
+  };
   };
 
   componentDidMount() {

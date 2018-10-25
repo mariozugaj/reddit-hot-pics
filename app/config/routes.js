@@ -3,6 +3,7 @@ import { createStackNavigator } from "react-navigation";
 import { Constants } from "expo";
 
 import Home from "../screens/Home";
+import PostDetails from "../screens/PostDetails";
 
 export default createStackNavigator(
   {
@@ -11,6 +12,12 @@ export default createStackNavigator(
       navigationOptions: {
         header: () => null,
       },
+    },
+    PostDetails: {
+      screen: PostDetails,
+      navigationOptions: ({ navigation }) => ({
+        headerTitle: navigation.state.params.title,
+      }),
     },
   },
   {
