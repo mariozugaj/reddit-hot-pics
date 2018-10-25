@@ -1,10 +1,13 @@
-import request from "../lib/request";
+import request from "../../lib/request";
 
-function get(subreddit, params) {
+function get({ subreddit, sorting = "hot", params = {} }) {
   return request({
-    url: `/r/${subreddit}/hot.json`,
+    url: `/r/${subreddit}/${sorting}`,
     method: "GET",
-    params,
+    params: {
+      raw_json: 1,
+      ...params,
+    },
   });
 }
 
