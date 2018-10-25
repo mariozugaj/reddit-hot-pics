@@ -1,15 +1,19 @@
 import React, { Component } from "react";
-import { View, StatusBar, Text, Dimensions, ActivityIndicator } from "react-native";
+import { View, StatusBar, Text, Dimensions, ActivityIndicator, Image } from "react-native";
 
 import { Container } from "../components/Container";
+import { AlertConsumer } from "../components/Alert";
+
 import SubredditService from "../shared/services/api/subreddit";
 import constants from "../shared/constants";
 
-export default class Home extends Component {
+const DEFAULT_SUBREDDIT = "picjjjs";
+
+class Home extends Component {
   state = {
     isLoading: true,
-    posts: [],
-    currentSubreddit: "pics",
+    posts: null,
+    currentSubreddit: DEFAULT_SUBREDDIT,
   };
 
   mapResponseToData = response => {
@@ -38,25 +42,45 @@ export default class Home extends Component {
     });
   };
 
+  stopLoading = () => {
+    this.setState({
+      isLoading: false,
+    });
+  };
+
+  fetchSuccess = response => {
+    if (!response.data.children.length) {
+      this.stopLoading();
+      return this.props.alertWithType("error", "Error", "Sorry, no such subreddit exists.");
+    }
+
+    this.setState({
+      posts: this.mapResponseToData(response),
+      isLoading: false,
+    });
+  };
+
+  fetchFailure = error => {
+    this.props.alertWithType("error", "Error", error);
+    this.stopLoading();
+  };
+
   fetchPosts = (subreddit, sorting, params) => {
-    SubredditService.get({ subreddit, sorting, params }).then(response =>
-      this.setState({
-        posts: this.mapResponseToData(response),
-        isLoading: false,
-      })
-    );
+    SubredditService.get({ subreddit, sorting, params })
+      .then(response => this.fetchSuccess(response))
+      .catch(error => this.fetchFailure(error));
   };
 
   componentDidMount() {
     const { isLoading, posts, currentSubreddit } = this.state;
 
-    if (!posts.length) {
+    if (!posts) {
       this.fetchPosts(currentSubreddit, "hot", {});
     }
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, posts } = this.state;
 
     if (isLoading) {
       return (
@@ -65,6 +89,23 @@ export default class Home extends Component {
         </Container>
       );
     }
+
+    if (!posts) {
+      let { width } = Dimensions.get("window");
+      width = width / 3;
+
+      return (
+        <Container centered>
+          <Image
+            source={require("../../assets/icon.png")}
+            resizeMode="contain"
+            style={{ width, height: width }}
+          />
+          <Text style={{ paddingTop: 10 }}>It's sooo empty in here...</Text>
+        </Container>
+      );
+    }
+
     return (
       <Container>
         <StatusBar translucent={false} barStyle="dark-content" />
@@ -72,3 +113,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default () => <AlertConsumer>{context => <Home {...context} />}</AlertConsumer>;

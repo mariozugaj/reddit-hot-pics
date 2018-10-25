@@ -3,6 +3,7 @@ import { View } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 
 import Navigator from "./config/routes";
+import { AlertProvider } from "./components/Alert";
 
 EStyleSheet.build({
   $primaryColor: "#ff4500",
@@ -13,6 +14,10 @@ EStyleSheet.build({
 
 export default class App extends React.Component {
   render() {
-    return <Navigator />;
+    return (
+      <AlertProvider>
+        <Navigator />
+      </AlertProvider>
+    );
   }
 }
