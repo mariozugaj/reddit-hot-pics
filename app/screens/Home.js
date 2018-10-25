@@ -6,6 +6,8 @@ import {
   Dimensions,
   ActivityIndicator,
   Image,
+  ScrollView,
+  RefreshControl,
 } from "react-native";
 
 import { Container } from "../components/Container";
@@ -20,6 +22,7 @@ const DEFAULT_SUBREDDIT = "pics";
 class Home extends Component {
   state = {
     isLoading: true,
+    isRefreshing: false,
     posts: null,
     currentSubreddit: DEFAULT_SUBREDDIT,
   };
@@ -58,6 +61,7 @@ class Home extends Component {
   stopLoading = () => {
     this.setState({
       isLoading: false,
+      isRefreshing: false,
     });
   };
 
@@ -74,6 +78,7 @@ class Home extends Component {
     this.setState({
       posts: this.mapResponseToData(response),
       isLoading: false,
+      isRefreshing: false,
     });
   };
 
@@ -94,6 +99,10 @@ class Home extends Component {
       title: `r/${this.state.currentSubreddit}`,
     });
   };
+
+  onRefresh = () => {
+    this.setState({ isRefreshing: true });
+    this.fetchPosts(this.state.currentSubreddit, "hot", {});
   };
 
   componentDidMount() {
@@ -105,7 +114,7 @@ class Home extends Component {
   }
 
   render() {
-    const { isLoading, posts } = this.state;
+    const { isLoading, posts, isRefreshing } = this.state;
 
     if (isLoading) {
       return (
@@ -134,7 +143,16 @@ class Home extends Component {
     return (
       <Container>
         <StatusBar translucent={false} barStyle="dark-content" />
-        <CardList posts={posts} onPress={this.onPress} />
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+        >
+          <CardList posts={posts} onPress={this.onPress} />
+        </ScrollView>
       </Container>
     );
   }
