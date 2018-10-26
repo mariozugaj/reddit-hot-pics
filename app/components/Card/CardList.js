@@ -12,6 +12,7 @@ const CardList = ({
   onPress,
   onRefresh,
   refreshing,
+  handleLoadMore,
 }) => (
   <FlatList
     data={posts}
@@ -20,6 +21,8 @@ const CardList = ({
     )}
     onRefresh={() => onRefresh()}
     refreshing={refreshing}
+    onEndReached={handleLoadMore}
+    onEndReachedThreshold={10}
     ListEmptyComponent={NotFound}
     contentContainerStyle={!posts.length && styles.empty}
   />
@@ -40,6 +43,7 @@ CardList.propTypes = {
   onPress: PropTypes.func,
   onRefresh: PropTypes.func,
   refreshing: PropTypes.bool,
+  handleLoadMore: PropTypes.func,
 };
 
 export default CardList;

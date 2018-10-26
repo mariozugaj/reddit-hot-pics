@@ -22,8 +22,10 @@ class Home extends Component {
   state = {
     isLoading: true,
     isRefreshing: false,
-    posts: null,
+    posts: [],
     currentSubreddit: DEFAULT_SUBREDDIT,
+    after: "",
+    count: null,
   };
 
   mapResponseToData = response => {
@@ -73,10 +75,16 @@ class Home extends Component {
       );
     }
 
+    const newPostsState = this.state.isRefreshing
+      ? this.mapResponseToData(response)
+      : [...this.state.posts, ...this.mapResponseToData(response)];
+
     this.setState({
-      posts: this.mapResponseToData(response),
+      posts: newPostsState,
       isLoading: false,
       isRefreshing: false,
+      after: response.data.after,
+      count: response.data.dist,
     });
   };
 
@@ -102,10 +110,18 @@ class Home extends Component {
     this.fetchPosts(this.state.currentSubreddit, "hot", {});
   };
 
+  handleLoadMore = () => {
+    this.fetchPosts(this.state.currentSubreddit, "hot", {
+      after: this.state.after,
+      count: this.state.count,
+    });
+  };
+
   componentDidMount() {
     const { isLoading, posts, currentSubreddit } = this.state;
 
     if (!posts) {
+    if (!posts.length) {
       this.fetchPosts(currentSubreddit, "hot", {});
     }
   }
@@ -128,6 +144,7 @@ class Home extends Component {
           onPress={this.onPress}
           onRefresh={this.onRefresh}
           refreshing={isRefreshing}
+          handleLoadMore={this.handleLoadMore}
         />
       </Container>
     );
