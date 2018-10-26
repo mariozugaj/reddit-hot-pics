@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React, { Fragment } from "react";
-import { TouchableHighlight, View, Image, Text, Platform } from "react-native";
+import { TouchableHighlight, View, Image, Text } from "react-native";
 import moment from "moment";
 import numbro from "numbro";
 import { Foundation, Entypo } from "@expo/vector-icons";

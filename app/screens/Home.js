@@ -1,14 +1,6 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import {
-  View,
-  StatusBar,
-  Text,
-  Dimensions,
-  ActivityIndicator,
-  Image,
-  RefreshControl,
-} from "react-native";
+import { Dimensions, ActivityIndicator } from "react-native";
 import hoistNonReactStatic from "hoist-non-react-statics";
 
 import { Container } from "../components/Container";

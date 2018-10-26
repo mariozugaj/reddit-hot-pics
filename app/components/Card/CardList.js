@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { FlatList, Dimensions } from "react-native";
+import { FlatList } from "react-native";
 
 import Card from "./Card";
 import { NotFound } from "../NotFound";

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 
 import ErrorBoundary from "./components/ErrorBoundary";

@@ -5,7 +5,9 @@ import { View } from "react-native";
 import styles from "./styles";
 
 const Container = ({ children, centered }) => (
-  <View style={[styles.container, centered ? styles.centered : null]}>{children}</View>
+  <View style={[styles.container, centered ? styles.centered : null]}>
+    {children}
+  </View>
 );
 
 Container.propTypes = {

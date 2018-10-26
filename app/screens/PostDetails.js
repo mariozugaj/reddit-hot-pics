@@ -17,8 +17,4 @@ PostDetails.propTypes = {
   alert: PropTypes.func,
 };
 
-export default props => (
-  <AlertConsumer>
-    {context => <PostDetails {...context} {...props} />}
-  </AlertConsumer>
-);
+export default PostDetails;
