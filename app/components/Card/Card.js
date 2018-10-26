@@ -18,6 +18,7 @@ const Card = ({ post, onPress }) => {
   ).fromNow()}`;
   const postScore = numbro(post.score).format({ average: true });
   const postNumComments = numbro(post.numComments).format({ average: true });
+  const postText = post.text.replace(/\n\n|\n|\r/g, " ");
 
   return (
     <View style={styles.container}>
@@ -44,6 +45,11 @@ const Card = ({ post, onPress }) => {
             )}
           </View>
           <Text style={styles.title}>{post.title}</Text>
+          {post.text !== "" && (
+            <Text style={styles.text} numberOfLines={3}>
+              {postText}
+            </Text>
+          )}
           {post.previewImageUrl !== "" && (
             <Image
               source={{ uri: post.previewImageUrl }}
@@ -89,6 +95,7 @@ Card.propTypes = {
     numComments: PropTypes.number,
     previewImageUrl: PropTypes.string,
     stickied: PropTypes.bool,
+    text: PropTypes.string,
   }),
   onPress: PropTypes.func,
 };

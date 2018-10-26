@@ -38,6 +38,12 @@ export default EStyleSheet.create({
     top: 15,
     right: 15,
   },
+  text: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 10,
+    color: "$lightText",
+  },
   image: {
     width: windowWidth,
     height: windowWidth,

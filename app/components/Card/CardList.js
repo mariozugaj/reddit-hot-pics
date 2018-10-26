@@ -39,6 +39,7 @@ CardList.propTypes = {
       numComments: PropTypes.number,
       previewImageUrl: PropTypes.string,
       stickied: PropTypes.bool,
+      text: PropTypes.string,
     })
   ),
   onPress: PropTypes.func,
