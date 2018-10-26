@@ -1,7 +1,8 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StatusBar } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 
+import ErrorBoundary from "./components/ErrorBoundary";
 import Navigator from "./config/routes";
 import { AlertProvider } from "./components/Alert";
 
@@ -17,7 +18,10 @@ export default class App extends React.Component {
   render() {
     return (
       <AlertProvider>
-        <Navigator />
+        <ErrorBoundary>
+          <StatusBar translucent={false} barStyle="dark-content" />
+          <Navigator />
+        </ErrorBoundary>
       </AlertProvider>
     );
   }
