@@ -1,7 +1,7 @@
 import EStyleSheet from "react-native-extended-stylesheet";
 import { Dimensions } from "react-native";
 
-const imageWidth = Dimensions.get("window").width;
+const windowWidth = Dimensions.get("window").width;
 
 export default EStyleSheet.create({
   $underlayColor: "$underlay",
@@ -39,8 +39,8 @@ export default EStyleSheet.create({
     right: 15,
   },
   image: {
-    width: imageWidth,
-    height: imageWidth,
+    width: windowWidth,
+    height: windowWidth,
   },
   footer: {
     flex: 1,
@@ -56,6 +56,12 @@ export default EStyleSheet.create({
   },
   footerGroup: {
     flexDirection: "row",
+    alignItems: "center",
+  },
+  empty: {
+    flex: 1,
+    justifyContent: "center",
+    width: windowWidth,
     alignItems: "center",
   },
 });

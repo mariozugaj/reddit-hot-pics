@@ -6,7 +6,6 @@ import {
   Dimensions,
   ActivityIndicator,
   Image,
-  ScrollView,
   RefreshControl,
 } from "react-native";
 
@@ -52,7 +51,6 @@ class Home extends Component {
         title: data.title,
         id: data.id,
         permalink: data.permalink,
-        thumbnail: data.thumbnail,
         previewImageUrl,
       };
     });
@@ -96,7 +94,6 @@ class Home extends Component {
   onPress = postURL => {
     this.props.navigation.navigate("PostDetails", {
       postURL: `${constants.baseURL}${postURL}`,
-      title: `r/${this.state.currentSubreddit}`,
     });
   };
 
@@ -124,35 +121,14 @@ class Home extends Component {
       );
     }
 
-    if (!posts) {
-      let { width } = Dimensions.get("window");
-      width = width / 3;
-
-      return (
-        <Container centered>
-          <Image
-            source={require("../../assets/icon.png")}
-            resizeMode="contain"
-            style={{ width, height: width }}
-          />
-          <Text style={{ paddingTop: 10 }}>It's sooo empty in here...</Text>
-        </Container>
-      );
-    }
-
     return (
       <Container>
-        <StatusBar translucent={false} barStyle="dark-content" />
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={isRefreshing}
-              onRefresh={this.onRefresh}
-            />
-          }
-        >
-          <CardList posts={posts} onPress={this.onPress} />
-        </ScrollView>
+        <CardList
+          posts={posts}
+          onPress={this.onPress}
+          onRefresh={this.onRefresh}
+          refreshing={isRefreshing}
+        />
       </Container>
     );
   }
