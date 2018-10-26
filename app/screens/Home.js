@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import {
   View,
@@ -20,6 +21,12 @@ import constants from "../shared/constants";
 const DEFAULT_SUBREDDIT = "pics";
 
 class Home extends Component {
+  static propTypes = {
+    navigation: PropTypes.object,
+    alertWithType: PropTypes.func,
+    alert: PropTypes.func,
+  };
+
   static navigationOptions = ({ navigation }) => ({
     headerTitle: `r/${navigation.getParam("title")}`,
   });
