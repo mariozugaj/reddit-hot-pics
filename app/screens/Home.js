@@ -165,7 +165,9 @@ class Home extends Component {
 }
 
 const AlertedHome = props => (
-  <AlertConsumer>{context => <Home {...props} {...context} />}</AlertConsumer>
+  <AlertConsumer>
+    {alertWithType => <Home {...props} alertWithType={alertWithType} />}
+  </AlertConsumer>
 );
 
 export default hoistNonReactStatic(AlertedHome, Home);

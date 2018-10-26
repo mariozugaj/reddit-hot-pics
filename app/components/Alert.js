@@ -13,17 +13,11 @@ export class AlertProvider extends Component {
 
   dropdown = React.createRef();
 
-  alert = (...args) => this.dropdown.current.alert(...args);
   alertWithType = (...args) => this.dropdown.current.alertWithType(...args);
 
   render() {
     return (
-      <AlertContext.Provider
-        value={{
-          alert: this.alert,
-          alertWithType: this.alertWithType,
-        }}
-      >
+      <AlertContext.Provider value={this.alertWithType}>
         {this.props.children}
         <DropdownAlert ref={this.dropdown} />
       </AlertContext.Provider>
