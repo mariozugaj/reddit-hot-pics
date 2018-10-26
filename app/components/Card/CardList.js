@@ -24,7 +24,7 @@ const CardList = ({
     refreshing={refreshing}
     onEndReached={handleLoadMore}
     onEndReachedThreshold={10}
-    ListEmptyComponent={NotFound}
+    ListEmptyComponent={<NotFound text="It's soooo empty in here..." />}
     contentContainerStyle={!posts.length && styles.empty}
   />
 );
