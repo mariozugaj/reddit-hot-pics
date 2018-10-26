@@ -8,6 +8,7 @@ import {
   Image,
   RefreshControl,
 } from "react-native";
+import hoistNonReactStatic from "hoist-non-react-statics";
 
 import { Container } from "../components/Container";
 import { AlertConsumer } from "../components/Alert";
@@ -19,6 +20,10 @@ import constants from "../shared/constants";
 const DEFAULT_SUBREDDIT = "pics";
 
 class Home extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerTitle: `r/${navigation.getParam("title")}`,
+  });
+
   state = {
     isLoading: true,
     isRefreshing: false,
@@ -120,7 +125,8 @@ class Home extends Component {
   componentDidMount() {
     const { isLoading, posts, currentSubreddit } = this.state;
 
-    if (!posts) {
+    this.props.navigation.setParams({ title: currentSubreddit });
+
     if (!posts.length) {
       this.fetchPosts(currentSubreddit, "hot", {});
     }
@@ -151,6 +157,8 @@ class Home extends Component {
   }
 }
 
-export default props => (
-  <AlertConsumer>{context => <Home {...context} {...props} />}</AlertConsumer>
+const AlertedHome = props => (
+  <AlertConsumer>{context => <Home {...props} {...context} />}</AlertConsumer>
 );
+
+export default hoistNonReactStatic(AlertedHome, Home);
