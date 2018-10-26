@@ -19,6 +19,7 @@ const CardList = ({
     renderItem={({ item }) => (
       <Card post={item} onPress={onPress} key={item.id} />
     )}
+    keyExtractor={item => item.id}
     onRefresh={() => onRefresh()}
     refreshing={refreshing}
     onEndReached={handleLoadMore}
