@@ -40,34 +40,31 @@ class Home extends Component {
     count: null,
   };
 
+  bestPreviewImage = preview => {
+    if (preview != null && preview.images != null) {
+      const { width } = Dimensions.get("window");
+      const resolutions = preview.images[0].resolutions;
+      const closest =
+        resolutions.find(resolution => resolution.width >= width) ||
+        resolutions.pop();
+      return closest.url;
+    }
+    return "";
+  };
+
   mapResponseToData = response => {
-    const { width } = Dimensions.get("window");
-
-    return response.data.children.map(({ data }) => {
-      const preview = data.preview;
-      let previewImageUrl = "";
-      if (preview != null && preview.images != null) {
-        const resolutions = preview.images[0].resolutions;
-        filteredImageResolution = resolutions.filter(
-          resolution => resolution.width > width
-        );
-        previewImageUrl = filteredImageResolution.filter(Boolean).length
-          ? filteredImageResolution[0].url
-          : "";
-      }
-
-      return {
-        author: data.author,
-        stickied: data.stickied,
-        numComments: data.num_comments,
-        score: data.score,
-        createdAt: data.created_utc,
-        title: data.title,
-        id: data.id,
-        permalink: data.permalink,
-        previewImageUrl,
-      };
-    });
+    return response.data.children.map(({ data }) => ({
+      author: data.author,
+      stickied: data.stickied,
+      numComments: data.num_comments,
+      score: data.score,
+      createdAt: data.created_utc,
+      title: data.title,
+      id: data.id,
+      permalink: data.permalink,
+      previewImageUrl: this.bestPreviewImage(data.preview),
+      text: data.selftext,
+    }));
   };
 
   stopLoading = () => {
