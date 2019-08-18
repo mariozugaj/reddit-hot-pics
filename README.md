@@ -1,6 +1,6 @@
 # Reddit Hot Pics
 
-![Usage GIF](https://cl.ly/b1958564df2b/Screen%252520Recording%2525202018-10-26%252520at%25252004.31%252520PM.gif) ![Infinite scroll GIF](https://cl.ly/7c2ae3e0750c/Screen%252520Recording%2525202018-10-26%252520at%25252004.32%252520PM.gif)
+![Usage GIF](https://github-readme-screenshots.s3.eu-central-1.amazonaws.com/reddit-hot-pics/Screen+Recording+2018-10-26+at+04.31+PM.gif) ![Infinite scroll GIF](https://github-readme-screenshots.s3.eu-central-1.amazonaws.com/reddit-hot-pics/Screen+Recording+2018-10-26+at+04.32+PM.gif)
 
 ## Requirements
 
@@ -8,19 +8,20 @@ To develop locally, [expo-cli](https://github.com/expo/expo-cli) is necessary.
 
 ## Getting started
 
-First, install all necessary packages with `yarn install` or `npm install`.
-Second, execute `npm start` or `yarn start` to start the local development server of Expo CLI. You can also run platform specific server by running either `yarn ios` or `yarn android`.
+1. Install all necessary packages with `yarn install` or `npm install`.
+2. Execute `npm start` or `yarn start` to start the local development server of Expo CLI.
+3. You can also run platform specific server by running either `yarn ios` or `yarn android`.
 
 ## Technical notes
-* bootstrapped using [expo-cli](https://github.com/expo/expo-cli)
-* axios is used to create service to call Reddit API - it's easy to extend and catches a lot of errors that native fetch does not
-* moment library is used for time (of post creation) formatting
-* numbro library is used for number formatting (e.g. post score and number of comments)
-* rendering errors are caught using ErrorBoundary HOC
-* network errors are caught and displayed using dropdown alert library
-* pull to refresh and infinite scroll are implemented using react native's components and APIs (FlatList implements it)
-* ESLint is used as a source code styling guide
 
+- bootstrapped using [expo-cli](https://github.com/expo/expo-cli)
+- axios is used to create service to call Reddit API - it's easy to extend and catches a lot of errors that native fetch does not
+- moment library is used for time (of post creation) formatting
+- numbro library is used for number formatting (e.g. post score and number of comments)
+- rendering errors are caught using ErrorBoundary HOC
+- network errors are caught and displayed using dropdown alert library
+- pull to refresh and infinite scroll are implemented using react native's components and APIs (FlatList implements it)
+- ESLint is used as a source code styling guide
 
 ## Download
 
