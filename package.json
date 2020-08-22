@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.18.1",
     "expo": "^30.0.1",
-    "hoist-non-react-statics": "^3.0.1",
+    "hoist-non-react-statics": "^3.3.2",
     "moment": "^2.22.2",
     "numbro": "^2.1.1",
     "prop-types": "^15.6.2",
